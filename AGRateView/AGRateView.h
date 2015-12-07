@@ -50,13 +50,13 @@ typedef void(^AGRateViewRateDidChangedBlock)(AGRateView *rateView, NSInteger rat
 
 @protocol AGRateViewShapeSource <NSObject>
 
+@optional
+- (void)rateView:(AGRateView *)rateView drawShapeWithWidth:(CGFloat)width inFrame:(CGRect)frame borderWidth:(CGFloat)borderWidth withFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor;
+
 - (UIColor *)rateView:(AGRateView *)rateView fillSelectedColorForShapeAtIndex:(NSUInteger)index;
 - (UIColor *)rateView:(AGRateView *)rateView fillNotSelectedColorForShapeAtIndex:(NSUInteger)index;
 - (UIColor *)rateView:(AGRateView *)rateView borderSelectedColorForShapeAtIndex:(NSUInteger)index;
 - (UIColor *)rateView:(AGRateView *)rateView borderNotSelectedColorForShapeAtIndex:(NSUInteger)index;
-
-@optional
-- (void)rateView:(AGRateView *)rateView drawShapeWithWidth:(CGFloat)width inFrame:(CGRect)frame borderWidth:(CGFloat)borderWidth withFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor;
 
 @end
 
