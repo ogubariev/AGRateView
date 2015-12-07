@@ -63,12 +63,20 @@
     [AGPoligoneShape drawShapeWithWidth:width inFrame:frame borderWidth:borderWidth withFillColor:fillColor borderColor:borderColor];
 }
 
-- (UIColor *)rateView:(AGRateView *)rateView fillColorForShapeAtIndex:(NSUInteger)index{
+- (UIColor *)rateView:(AGRateView *)rateView fillSelectedColorForShapeAtIndex:(NSUInteger)index{
     return [UIColor redColor];
 }
 
-- (UIColor *)rateView:(AGRateView *)rateView borderColorForShapeAtIndex:(NSUInteger)index{
+- (UIColor *)rateView:(AGRateView *)rateView fillNotSelectedColorForShapeAtIndex:(NSUInteger)index{
+    return [UIColor yellowColor];
+}
+
+- (UIColor *)rateView:(AGRateView *)rateView borderSelectedColorForShapeAtIndex:(NSUInteger)index{
     return [UIColor greenColor];
+}
+
+- (UIColor *)rateView:(AGRateView *)rateView borderNotSelectedColorForShapeAtIndex:(NSUInteger)index{
+    return [UIColor orangeColor];
 }
 
 @end

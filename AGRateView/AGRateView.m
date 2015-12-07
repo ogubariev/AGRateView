@@ -78,8 +78,9 @@ CGFloat   const kAGRateViewShapesBorderWidth    = 0.5f;
     CGFloat cellHeight = CGRectGetHeight(self.bounds);
     for (NSInteger i = 0; i < self.countOfShapes; i++) {
         CGRect cellRect = CGRectMake(cellWidth * i, 0, cellWidth, cellHeight);
-        UIColor *fillColor = i < self.rating ? [self fillColorForShapeAtIndex:i] : [UIColor clearColor];
-        [self drawShapeWithWidth:[self getShapeWidth] inFrame:cellRect borderWidth:self.shapesBorderWidth withFillColor:fillColor borderColor:[self borderColorForShapeAtIndex:i]];
+        UIColor *fillColor = i < self.rating ? [self fillSelectedColorForShapeAtIndex:i] : [self fillNotSelectedColorForShapeAtIndex:i];
+        UIColor *borderColor = i < self.rating ? [self borderSelectedColorForShapeAtIndex:i] : [self borderNotSelectedColorForShapeAtIndex:i];
+        [self drawShapeWithWidth:[self getShapeWidth] inFrame:cellRect borderWidth:self.shapesBorderWidth withFillColor:fillColor borderColor:borderColor];
     }
 }
 
@@ -181,17 +182,25 @@ CGFloat   const kAGRateViewShapesBorderWidth    = 0.5f;
 }
 
 #pragma mark - Private Api
-- (UIColor *)borderColorForShapeAtIndex:(NSInteger)shapeIndex{
-    if ([self.shapeSource respondsToSelector:@selector(rateView:borderColorForShapeAtIndex:)]) {
-        return [self.shapeSource rateView:self borderColorForShapeAtIndex:shapeIndex];
+- (UIColor *)borderSelectedColorForShapeAtIndex:(NSInteger)shapeIndex{
+    if ([self.shapeSource respondsToSelector:@selector(rateView:borderSelectedColorForShapeAtIndex:)]) {
+        return [self.shapeSource rateView:self borderSelectedColorForShapeAtIndex:shapeIndex];
     }else{
         return self.shapesBorderColor;
     }
 }
 
-- (UIColor *)fillColorForShapeAtIndex:(NSInteger)shapeIndex {
-    if ([self.shapeSource respondsToSelector:@selector(rateView:fillColorForShapeAtIndex:)]) {
-        return [self.shapeSource rateView:self fillColorForShapeAtIndex:shapeIndex];
+- (UIColor *)borderNotSelectedColorForShapeAtIndex:(NSInteger)shapeIndex{
+    if ([self.shapeSource respondsToSelector:@selector(rateView:borderNotSelectedColorForShapeAtIndex:)]) {
+        return [self.shapeSource rateView:self borderNotSelectedColorForShapeAtIndex:shapeIndex];
+    }else{
+        return self.shapesBorderColor;
+    }
+}
+
+- (UIColor *)fillSelectedColorForShapeAtIndex:(NSInteger)shapeIndex {
+    if ([self.shapeSource respondsToSelector:@selector(rateView:fillSelectedColorForShapeAtIndex:)]) {
+        return [self.shapeSource rateView:self fillSelectedColorForShapeAtIndex:shapeIndex];
     }else{
         CGFloat startHue, finishHue;
         [self.shapesStartColor getHue:&startHue saturation:nil brightness:nil alpha:nil];
@@ -208,6 +217,14 @@ CGFloat   const kAGRateViewShapesBorderWidth    = 0.5f;
         CGFloat delta = (finishDeegrees - startDeegrees) / self.countOfShapes;
         CGFloat newValue = startDeegrees + delta * shapeIndex;
         return [UIColor colorWithHue:newValue / 360  saturation:1.f brightness:1.f alpha:1.f];
+    }
+}
+
+- (UIColor *)fillNotSelectedColorForShapeAtIndex:(NSInteger)shapeIndex {
+    if ([self.shapeSource respondsToSelector:@selector(rateView:fillNotSelectedColorForShapeAtIndex:)]) {
+        return [self.shapeSource rateView:self fillNotSelectedColorForShapeAtIndex:shapeIndex];
+    }else{
+        return [UIColor clearColor];
     }
 }
 
