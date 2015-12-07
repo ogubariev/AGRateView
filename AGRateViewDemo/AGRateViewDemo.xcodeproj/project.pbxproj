@@ -14,8 +14,8 @@
 		084D23F61BFC9BFC00CF4322 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 084D23F41BFC9BFC00CF4322 /* Main.storyboard */; };
 		084D23F81BFC9BFC00CF4322 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 084D23F71BFC9BFC00CF4322 /* Assets.xcassets */; };
 		084D23FB1BFC9BFC00CF4322 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 084D23F91BFC9BFC00CF4322 /* LaunchScreen.storyboard */; };
-		1107A3261C150A6800660660 /* AGStarShape.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107A3251C150A6800660660 /* AGStarShape.m */; };
-		1107A3291C152B8A00660660 /* AGPoligoneShape.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107A3281C152B8A00660660 /* AGPoligoneShape.m */; };
+		BD2CAB7A1C15F800003386EF /* AGPoligoneShape.m in Sources */ = {isa = PBXBuildFile; fileRef = BD2CAB761C15F800003386EF /* AGPoligoneShape.m */; };
+		BD2CAB7B1C15F800003386EF /* AGStarShape.m in Sources */ = {isa = PBXBuildFile; fileRef = BD2CAB791C15F800003386EF /* AGStarShape.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,10 +31,10 @@
 		084D23F71BFC9BFC00CF4322 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		084D23FA1BFC9BFC00CF4322 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		084D23FC1BFC9BFC00CF4322 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1107A3241C150A6800660660 /* AGStarShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGStarShape.h; sourceTree = "<group>"; };
-		1107A3251C150A6800660660 /* AGStarShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGStarShape.m; sourceTree = "<group>"; };
-		1107A3271C152B8A00660660 /* AGPoligoneShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGPoligoneShape.h; sourceTree = "<group>"; };
-		1107A3281C152B8A00660660 /* AGPoligoneShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGPoligoneShape.m; sourceTree = "<group>"; };
+		BD2CAB751C15F800003386EF /* AGPoligoneShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGPoligoneShape.h; sourceTree = "<group>"; };
+		BD2CAB761C15F800003386EF /* AGPoligoneShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGPoligoneShape.m; sourceTree = "<group>"; };
+		BD2CAB781C15F800003386EF /* AGStarShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGStarShape.h; sourceTree = "<group>"; };
+		BD2CAB791C15F800003386EF /* AGStarShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGStarShape.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +51,7 @@
 		081675081BFCCAC300FE4BBD /* AGRateView */ = {
 			isa = PBXGroup;
 			children = (
-				1107A3231C150A0200660660 /* Shapes */,
+				BD2CAB721C15F800003386EF /* Shapes */,
 				081675091BFCCAC300FE4BBD /* AGRateView.h */,
 				0816750A1BFCCAC300FE4BBD /* AGRateView.m */,
 			);
@@ -100,15 +100,39 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		1107A3231C150A0200660660 /* Shapes */ = {
+		BD2CAB721C15F800003386EF /* Shapes */ = {
 			isa = PBXGroup;
 			children = (
-				1107A3241C150A6800660660 /* AGStarShape.h */,
-				1107A3251C150A6800660660 /* AGStarShape.m */,
-				1107A3271C152B8A00660660 /* AGPoligoneShape.h */,
-				1107A3281C152B8A00660660 /* AGPoligoneShape.m */,
+				BD2CAB731C15F800003386EF /* Custom Shapes */,
+				BD2CAB771C15F800003386EF /* Default Shape */,
 			);
 			path = Shapes;
+			sourceTree = "<group>";
+		};
+		BD2CAB731C15F800003386EF /* Custom Shapes */ = {
+			isa = PBXGroup;
+			children = (
+				BD2CAB741C15F800003386EF /* Poligon Shape */,
+			);
+			path = "Custom Shapes";
+			sourceTree = "<group>";
+		};
+		BD2CAB741C15F800003386EF /* Poligon Shape */ = {
+			isa = PBXGroup;
+			children = (
+				BD2CAB751C15F800003386EF /* AGPoligoneShape.h */,
+				BD2CAB761C15F800003386EF /* AGPoligoneShape.m */,
+			);
+			path = "Poligon Shape";
+			sourceTree = "<group>";
+		};
+		BD2CAB771C15F800003386EF /* Default Shape */ = {
+			isa = PBXGroup;
+			children = (
+				BD2CAB781C15F800003386EF /* AGStarShape.h */,
+				BD2CAB791C15F800003386EF /* AGStarShape.m */,
+			);
+			path = "Default Shape";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,12 +205,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1107A3291C152B8A00660660 /* AGPoligoneShape.m in Sources */,
 				084D23F31BFC9BFC00CF4322 /* ViewController.m in Sources */,
+				BD2CAB7A1C15F800003386EF /* AGPoligoneShape.m in Sources */,
 				084D23F01BFC9BFC00CF4322 /* AppDelegate.m in Sources */,
 				0816750B1BFCCAC300FE4BBD /* AGRateView.m in Sources */,
 				084D23ED1BFC9BFC00CF4322 /* main.m in Sources */,
-				1107A3261C150A6800660660 /* AGStarShape.m in Sources */,
+				BD2CAB7B1C15F800003386EF /* AGStarShape.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
