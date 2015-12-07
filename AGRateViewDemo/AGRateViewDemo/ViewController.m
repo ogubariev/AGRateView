@@ -28,9 +28,14 @@
 #import "ViewController.h"
 #import "AGRateView.h"
 
-@interface ViewController ()
+#import "AGStarShape.h"
+#import "AGPoligoneShape.h"
+
+@interface ViewController () <AGRateViewDelegate, AGRateViewShapeSource>
 @property (weak, nonatomic) IBOutlet AGRateView *rateView;
+@property (weak, nonatomic) IBOutlet AGRateView *customShapeRateView;
 @property (weak, nonatomic) IBOutlet UILabel *ratingLbl;
+@property (weak, nonatomic) IBOutlet UILabel *customShapeRatingLbl;
 
 @end
 
@@ -38,12 +43,40 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     self.rateView.ratingDidChangedBlock = ^(AGRateView *rateView, NSInteger rating) {
         self.ratingLbl.text = [NSString stringWithFormat:@"Rating is: %zd", rating];
         NSLog(@"Rating: %zd", rating);
     };
 }
 
+#pragma mark - AGRateViewDelegate
+
+- (void)rateView:(AGRateView *)rateView didChangedRating:(NSInteger)rating{
+    self.customShapeRatingLbl.text = [NSString stringWithFormat:@"Rating is: %zd", rating];
+    NSLog(@"Custom Shape Rating: %zd", rating);
+}
+
+#pragma mark - AGRateViewShapeSource
+
+- (void)rateView:(AGRateView *)rateView drawShapeWithWidth:(CGFloat)width inFrame:(CGRect)frame borderWidth:(CGFloat)borderWidth withFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor{
+    [AGPoligoneShape drawShapeWithWidth:width inFrame:frame borderWidth:borderWidth withFillColor:fillColor borderColor:borderColor];
+}
+
+- (UIColor *)rateView:(AGRateView *)rateView fillSelectedColorForShapeAtIndex:(NSUInteger)index{
+    return [UIColor redColor];
+}
+
+- (UIColor *)rateView:(AGRateView *)rateView fillNotSelectedColorForShapeAtIndex:(NSUInteger)index{
+    return [UIColor yellowColor];
+}
+
+- (UIColor *)rateView:(AGRateView *)rateView borderSelectedColorForShapeAtIndex:(NSUInteger)index{
+    return [UIColor greenColor];
+}
+
+- (UIColor *)rateView:(AGRateView *)rateView borderNotSelectedColorForShapeAtIndex:(NSUInteger)index{
+    return [UIColor orangeColor];
+}
 
 @end

@@ -48,23 +48,36 @@ typedef void(^AGRateViewRateDidChangedBlock)(AGRateView *rateView, NSInteger rat
 
 @end
 
+@protocol AGRateViewShapeSource <NSObject>
+
+@optional
+- (void)rateView:(AGRateView *)rateView drawShapeWithWidth:(CGFloat)width inFrame:(CGRect)frame borderWidth:(CGFloat)borderWidth withFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor;
+
+- (UIColor *)rateView:(AGRateView *)rateView fillSelectedColorForShapeAtIndex:(NSUInteger)index;
+- (UIColor *)rateView:(AGRateView *)rateView fillNotSelectedColorForShapeAtIndex:(NSUInteger)index;
+- (UIColor *)rateView:(AGRateView *)rateView borderSelectedColorForShapeAtIndex:(NSUInteger)index;
+- (UIColor *)rateView:(AGRateView *)rateView borderNotSelectedColorForShapeAtIndex:(NSUInteger)index;
+
+@end
+
 IB_DESIGNABLE
 @interface AGRateView : UIView
 
 @property (nonatomic, assign) IBInspectable NSInteger rating;
 
-@property (nonatomic, assign) IBInspectable NSInteger countOfStars;
+@property (nonatomic, assign) IBInspectable NSInteger countOfShapes;
 
-@property (nonatomic, assign) IBInspectable CGFloat starsBorderWidth;
+@property (nonatomic, assign) IBInspectable CGFloat shapesBorderWidth;
 
-@property (nonatomic, strong) IBInspectable UIColor *starsBorderColor;
+@property (nonatomic, strong) IBInspectable UIColor *shapesBorderColor;
 
-@property (nonatomic, strong) IBInspectable UIColor *starsStartColor;
+@property (nonatomic, strong) IBInspectable UIColor *shapesStartColor;
 
-@property (nonatomic, strong) IBInspectable UIColor *starsFinishColor;
+@property (nonatomic, strong) IBInspectable UIColor *shapesFinishColor;
 
 
 @property (nonatomic, weak) IBOutlet id <AGRateViewDelegate> delegate;
+@property (nonatomic, weak) IBOutlet id <AGRateViewShapeSource> shapeSource;
 @property (nonatomic, copy) AGRateViewRateDidChangedBlock ratingDidChangedBlock;
 
 @end
