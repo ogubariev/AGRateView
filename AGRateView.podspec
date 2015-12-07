@@ -21,3 +21,4 @@ Pod::Spec.new do |s|
     s.subspec 'Shapes' do |ss|
         ss.source_files = 'AGRateView/Shapes/*.{h,m}'
     end
+end
