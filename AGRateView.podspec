@@ -7,12 +7,15 @@ Pod::Spec.new do |s|
 	s.homepage     = 'https://github.com/ogubariev/AGRateView'
 	s.platform = :ios, '7.0'
 	s.source = { :git => 'https://github.com/ogubariev/AGRateView.git', :tag => '#{s.version}' }
-	s.source_files = 'AGRateView/*.{h,m}'
 	s.public_header_files = 'AGRateView/*.h'
 	
 	s.framework = 'Foundation'
 	s.requires_arc = true
-end
+s.default_subspecs = 'Default', 'Shapes'
+
+s.subspec 'Default' do |ss|
+    ss.source_files = 'AGRateView/*.{h,m}'
+  end
 
 s.subspec 'Shapes' do |ss|
     ss.source_files = 'AGRateView/Shapes/*.{h,m}’
