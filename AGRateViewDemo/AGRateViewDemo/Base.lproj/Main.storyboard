@@ -23,7 +23,7 @@
             </objects>
             <point key="canvasLocation" x="-374" y="176"/>
         </scene>
-        <!--View Controller-->
+        <!--Delegate-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
@@ -46,10 +46,10 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="rating">
                                         <integer key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="countOfStars">
-                                        <integer key="value" value="10"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="countOfShapes">
+                                        <integer key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="starsBorderWidth">
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shapesBorderWidth">
                                         <real key="value" value="0.5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
@@ -64,20 +64,61 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aM3-rY-1V7" customClass="AGRateView">
+                                <rect key="frame" x="20" y="228" width="560" height="80"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="Al2-Wb-1In"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="rating">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="countOfShapes">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shapesBorderWidth">
+                                        <real key="value" value="0.5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="NkT-63-6BI"/>
+                                    <outlet property="shapeSource" destination="BYZ-38-t0r" id="D4i-eH-u7X"/>
+                                </connections>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Jk-Hx-j7k">
+                                <rect key="frame" x="20" y="316" width="560" height="21"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="zcu-Ej-pR7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="aM3-rY-1V7" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="2IV-RB-o9g"/>
+                            <constraint firstItem="3Jk-Hx-j7k" firstAttribute="top" secondItem="aM3-rY-1V7" secondAttribute="bottom" constant="8" id="7TU-20-ZdY"/>
+                            <constraint firstItem="3Jk-Hx-j7k" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="7tO-7i-Okk"/>
                             <constraint firstItem="Mj9-xk-pAH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="RBh-CB-51i"/>
+                            <constraint firstItem="aM3-rY-1V7" firstAttribute="top" secondItem="Mj9-xk-pAH" secondAttribute="bottom" constant="8" id="TRY-Cp-aLt"/>
                             <constraint firstItem="Mj9-xk-pAH" firstAttribute="top" secondItem="3SQ-sh-bol" secondAttribute="bottom" constant="15" id="Zxs-Gr-0da"/>
                             <constraint firstItem="Mj9-xk-pAH" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="mJ8-y1-pHZ"/>
                             <constraint firstItem="3SQ-sh-bol" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="40" id="mys-Sx-doT"/>
                             <constraint firstItem="3SQ-sh-bol" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="nXz-rP-aQt"/>
                             <constraint firstItem="3SQ-sh-bol" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="r2s-dO-Uqu"/>
+                            <constraint firstItem="3Jk-Hx-j7k" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="roh-OC-Gm1"/>
+                            <constraint firstItem="aM3-rY-1V7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="sVW-xA-brK"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5VQ-u0-o3h"/>
                     <connections>
+                        <outlet property="customShapeRateView" destination="aM3-rY-1V7" id="Sbt-3w-WHB"/>
+                        <outlet property="customShapeRatingLbl" destination="3Jk-Hx-j7k" id="P90-j3-HXE"/>
                         <outlet property="rateView" destination="3SQ-sh-bol" id="mUL-dw-FAk"/>
                         <outlet property="ratingLbl" destination="Mj9-xk-pAH" id="aSc-SJ-Mtg"/>
                     </connections>

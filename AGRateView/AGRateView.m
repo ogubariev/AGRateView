@@ -27,16 +27,18 @@
 
 #import "AGRateView.h"
 
-NSInteger const kAGRateViewCountOfStars         = 10;
-NSInteger const kAGRateViewFirstStarTag         = 10;
-CGFloat   const kAGRateViewStarPadding          = 5.f;
-CGFloat   const kAGRateViewStarDefaultSize      = 34.f;
-CGFloat   const kAGRateViewStarsBorderWidth     = 0.5f;
+#import "AGStarShape.h"
+
+NSInteger const kAGRateViewCountOfShapes        = 10;
+NSInteger const kAGRateViewFirstShapesTag       = 10;
+CGFloat   const kAGRateViewShapesPadding        = 5.f;
+CGFloat   const kAGRateViewShapesDefaultSize    = 34.f;
+CGFloat   const kAGRateViewShapesBorderWidth    = 0.5f;
 
 
-#define kAGRateViewStarStartColor               [UIColor redColor]
-#define kAGRateViewStarsFinishColor             [UIColor greenColor]
-#define kAGRateViewStarsBorderColor             [UIColor blueColor]
+#define kAGRateViewShapesStartColor              [UIColor redColor]
+#define kAGRateViewShapesFinishColor             [UIColor greenColor]
+#define kAGRateViewShapesBorderColor             [UIColor blueColor]
 
 @implementation AGRateView
 
@@ -58,12 +60,12 @@ CGFloat   const kAGRateViewStarsBorderWidth     = 0.5f;
 }
 
 - (void)setDefaults {
-    _countOfStars       = kAGRateViewCountOfStars;
-    _rating             = self.countOfStars / 2;
-    _starsBorderWidth   = kAGRateViewStarsBorderWidth;
-    _starsBorderColor   = kAGRateViewStarsBorderColor;
-    _starsStartColor    = kAGRateViewStarStartColor;
-    _starsFinishColor   = kAGRateViewStarsFinishColor;
+    _countOfShapes      = kAGRateViewCountOfShapes;
+    _rating             = self.countOfShapes / 2;
+    _shapesBorderWidth   = kAGRateViewShapesBorderWidth;
+    _shapesBorderColor   = kAGRateViewShapesBorderColor;
+    _shapesStartColor    = kAGRateViewShapesStartColor;
+    _shapesFinishColor   = kAGRateViewShapesFinishColor;
 }
 
 - (void)layoutSubviews {
@@ -74,10 +76,10 @@ CGFloat   const kAGRateViewStarsBorderWidth     = 0.5f;
 - (void)drawRect:(CGRect)rect {
     CGFloat cellWidth = [self getCellWidth];
     CGFloat cellHeight = CGRectGetHeight(self.bounds);
-    for (NSInteger i = 0; i < self.countOfStars; i++) {
+    for (NSInteger i = 0; i < self.countOfShapes; i++) {
         CGRect cellRect = CGRectMake(cellWidth * i, 0, cellWidth, cellHeight);
-        UIColor *fillColor = i < self.rating ? [self colorForStarAtIndex: i] : [UIColor clearColor];
-        [self drawStarIn:cellRect withFillColor:fillColor];
+        UIColor *fillColor = i < self.rating ? [self fillColorForShapeAtIndex:i] : [UIColor clearColor];
+        [self drawShapeWithWidth:[self getShapeWidth] inFrame:cellRect borderWidth:self.shapesBorderWidth withFillColor:fillColor borderColor:[self borderColorForShapeAtIndex:i]];
     }
 }
 
@@ -90,79 +92,79 @@ CGFloat   const kAGRateViewStarsBorderWidth     = 0.5f;
 }
 
 - (void)setCountOfStars:(NSInteger)countOfStars {
-    if (_countOfStars != countOfStars) {
-        _countOfStars = countOfStars;
+    if (_countOfShapes != countOfStars) {
+        _countOfShapes = countOfStars;
         [self setNeedsDisplay];
     }
 }
 
 - (void)setStarsBorderWidth:(CGFloat)starsBorderWidth {
-    if (_starsBorderWidth != starsBorderWidth) {
-        _starsBorderWidth = starsBorderWidth;
+    if (_shapesBorderWidth != starsBorderWidth) {
+        _shapesBorderWidth = starsBorderWidth;
         [self setNeedsDisplay];
     }
 }
 
 
 - (void)setStarsBorderColor:(UIColor *)starsBorderColor {
-    if (_starsBorderColor != starsBorderColor) {
-        _starsBorderColor = starsBorderColor;
-        [_starsBorderColor setStroke];
+    if (_shapesBorderColor != starsBorderColor) {
+        _shapesBorderColor = starsBorderColor;
+        [_shapesBorderColor setStroke];
         [self setNeedsDisplay];
     }
 }
 
 - (void)setStarsStartColor:(UIColor *)starsStartColor {
-    if (_starsStartColor != starsStartColor) {
-        _starsStartColor = starsStartColor;
+    if (_shapesStartColor != starsStartColor) {
+        _shapesStartColor = starsStartColor;
         [self setNeedsDisplay];
     }
 }
 
 - (void)setStarsFinishColor:(UIColor *)starsFinishColor {
-    if (_starsFinishColor != starsFinishColor) {
-        _starsFinishColor = starsFinishColor;
+    if (_shapesFinishColor != starsFinishColor) {
+        _shapesFinishColor = starsFinishColor;
         [self setNeedsDisplay];
     }
 }
 
 - (CGFloat)getCellWidth {
-    return floor(CGRectGetWidth(self.bounds) / self.countOfStars);
+    return floor(CGRectGetWidth(self.bounds) / self.countOfShapes);
 }
 
-- (CGFloat)getStarWidth {
+- (CGFloat)getShapeWidth {
     CGFloat selfHeight = CGRectGetHeight(self.bounds);
     CGFloat cellWidth = [self getCellWidth];
     
     CGFloat starSize = MIN(selfHeight, cellWidth);
-    starSize -= 2 * kAGRateViewStarPadding;
-    return MIN(starSize, kAGRateViewStarDefaultSize);
+    starSize -= 2 * kAGRateViewShapesPadding;
+    return MIN(starSize, kAGRateViewShapesDefaultSize);
 }
 
 #pragma mark - Touches
--(void) updateRatingForPoint:(CGPoint)point {
+- (void) updateRatingForPoint:(CGPoint)point {
     CGFloat selfWidth = CGRectGetWidth(self.bounds);
     CGFloat locationX = point.x;
     locationX = locationX < 0 ? 0 : locationX;
     locationX = locationX > selfWidth ? selfWidth : locationX;
     
     NSInteger rating = 0;
-    for (NSInteger selectedStarIndex = 0 ; selectedStarIndex < self.countOfStars; selectedStarIndex++) {
-        if (locationX > (selectedStarIndex * [self getCellWidth] + ([self getCellWidth] - [self getStarWidth]) / 2)) {
+    for (NSInteger selectedStarIndex = 0 ; selectedStarIndex < self.countOfShapes; selectedStarIndex++) {
+        if (locationX > (selectedStarIndex * [self getCellWidth] + ([self getCellWidth] - [self getShapeWidth]) / 2)) {
             rating ++;
         }
     }
     self.rating = rating;
 }
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
     if (touch) {
         [self updateRatingForPoint:[touch locationInView:self]];
     }
 }
 
--(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
     if (touch) {
         [self updateRatingForPoint:[touch locationInView:self]];
@@ -179,54 +181,43 @@ CGFloat   const kAGRateViewStarsBorderWidth     = 0.5f;
 }
 
 #pragma mark - Private Api
-- (UIColor *)colorForStarAtIndex:(NSInteger)starIndex {
-    CGFloat startHue, finishHue;
-    [self.starsStartColor getHue:&startHue saturation:nil brightness:nil alpha:nil];
-    [self.starsFinishColor getHue:&finishHue saturation:nil brightness:nil alpha:nil];
-    
-    NSInteger startDeegrees = ceil(startHue * 360);
-    startDeegrees %= 360;
-    
-    NSInteger finishDeegrees = ceil(finishHue * 360);
-    if ((finishDeegrees % 360) != startDeegrees) {
-        finishDeegrees %= 360;
+- (UIColor *)borderColorForShapeAtIndex:(NSInteger)shapeIndex{
+    if ([self.shapeSource respondsToSelector:@selector(rateView:borderColorForShapeAtIndex:)]) {
+        return [self.shapeSource rateView:self borderColorForShapeAtIndex:shapeIndex];
+    }else{
+        return self.shapesBorderColor;
     }
-    
-    CGFloat delta = (finishDeegrees - startDeegrees) / self.countOfStars;
-    CGFloat newValue = startDeegrees + delta * starIndex;
-    return [UIColor colorWithHue:newValue / 360  saturation:1.f brightness:1.f alpha:1.f];
 }
 
--(void)drawStarIn:(CGRect)rect withFillColor:(UIColor *)fillColor {
-    CGFloat starSize = [self getStarWidth];
-    
-    // Create a path for star shape
-    UIBezierPath *starPath = [UIBezierPath new];
-    [starPath setLineWidth:self.starsBorderWidth];
-    [starPath moveToPoint:CGPointMake(starSize*0.0, starSize*0.35)];
-    [starPath addLineToPoint:CGPointMake(starSize*0.35, starSize*0.35)];
-    [starPath addLineToPoint:CGPointMake(starSize*0.50, starSize*0.0)];
-    [starPath addLineToPoint:CGPointMake(starSize*0.65, starSize*0.35)];
-    [starPath addLineToPoint:CGPointMake(starSize*1.00, starSize*0.35)];
-    [starPath addLineToPoint:CGPointMake(starSize*0.75, starSize*0.60)];
-    [starPath addLineToPoint:CGPointMake(starSize*0.85, starSize*1.00)];
-    [starPath addLineToPoint:CGPointMake(starSize*0.50, starSize*0.75)];
-    [starPath addLineToPoint:CGPointMake(starSize*0.15, starSize*1.00)];
-    [starPath addLineToPoint:CGPointMake(starSize*0.25, starSize*0.60)];
-    [starPath addLineToPoint:CGPointMake(starSize*0.0, starSize*0.35)];
-    [starPath closePath];
-    
-    CGPoint startPoint = CGPointMake((CGRectGetWidth(rect) - starSize) / 2, (CGRectGetHeight(rect) - starSize) / 2);
-    startPoint.x += rect.origin.x;
-    startPoint.y += rect.origin.y;
-    CGAffineTransform transform = CGAffineTransformMakeTranslation(startPoint.x, startPoint.y);
-    [starPath applyTransform:transform];
-    
-    [fillColor setFill];
-    [self.starsBorderColor setStroke];
+- (UIColor *)fillColorForShapeAtIndex:(NSInteger)shapeIndex {
+    if ([self.shapeSource respondsToSelector:@selector(rateView:fillColorForShapeAtIndex:)]) {
+        return [self.shapeSource rateView:self fillColorForShapeAtIndex:shapeIndex];
+    }else{
+        CGFloat startHue, finishHue;
+        [self.shapesStartColor getHue:&startHue saturation:nil brightness:nil alpha:nil];
+        [self.shapesFinishColor getHue:&finishHue saturation:nil brightness:nil alpha:nil];
+        
+        NSInteger startDeegrees = ceil(startHue * 360);
+        startDeegrees %= 360;
+        
+        NSInteger finishDeegrees = ceil(finishHue * 360);
+        if ((finishDeegrees % 360) != startDeegrees) {
+            finishDeegrees %= 360;
+        }
+        
+        CGFloat delta = (finishDeegrees - startDeegrees) / self.countOfShapes;
+        CGFloat newValue = startDeegrees + delta * shapeIndex;
+        return [UIColor colorWithHue:newValue / 360  saturation:1.f brightness:1.f alpha:1.f];
+    }
+}
 
-    [starPath fill];
-    [starPath stroke];
+- (void)drawShapeWithWidth:(CGFloat)width inFrame:(CGRect)frame borderWidth:(CGFloat)borderWidth withFillColor:(UIColor *)fillColor borderColor:(UIColor *)borderColor{
+    
+    if ([self.shapeSource respondsToSelector:@selector(rateView:drawShapeWithWidth:inFrame:borderWidth:withFillColor:borderColor:)]){
+        [self.shapeSource rateView:self drawShapeWithWidth:width inFrame:frame borderWidth:borderWidth withFillColor:fillColor borderColor:borderColor];
+    }else{
+        [AGStarShape drawShapeWithWidth:width inFrame:frame borderWidth:borderWidth withFillColor:fillColor borderColor:borderColor];
+    }
 }
 
 @end
